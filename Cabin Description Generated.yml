@@ -1,0 +1,232 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Cabin Description Generated
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1730279718371-source-1730279761643-target
+      source: '1730279718371'
+      sourceHandle: source
+      target: '1730279761643'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: http-request
+      id: 1730279761643-source-1730281859167-target
+      source: '1730279761643'
+      sourceHandle: source
+      target: '1730281859167'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: end
+      id: 1730281859167-source-1730279774449-target
+      source: '1730281859167'
+      sourceHandle: source
+      target: '1730279774449'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: img_url
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: img_url
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 場地基本資料
+          max_length: 512
+          options: []
+          required: true
+          type: paragraph
+          variable: VenueInfo
+      height: 116
+      id: '1730279718371'
+      position:
+        x: -70
+        y: 215
+      positionAbsolute:
+        x: -70
+        y: 215
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai
+        prompt_template:
+        - id: 6e6ea435-1d48-4286-8407-9cbedb2d352f
+          role: system
+          text: 請從 {{#1730279718371.VenueInfo#}}場地基本資料及網址讀取圖檔或上傳的圖檔，這是場地出租空間照片，請依圖中的場景撰寫適合空間出租用的文字，讓人想租下來，回傳文字為繁體中文300字以內。
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1730279718371'
+            - img_url
+          enabled: true
+      height: 98
+      id: '1730279761643'
+      position:
+        x: 304
+        y: 231
+      positionAbsolute:
+        x: 304
+        y: 231
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1730279761643'
+          - text
+          variable: text
+        selected: false
+        title: 結束
+        type: end
+      height: 90
+      id: '1730279774449'
+      position:
+        x: 907
+        y: 220.40000000000003
+      positionAbsolute:
+        x: 907
+        y: 220.40000000000003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 請求
+        type: http-request
+        url: ''
+        variables: []
+      height: 54
+      id: '1730281859167'
+      position:
+        x: 610
+        y: 231
+      positionAbsolute:
+        x: 610
+        y: 231
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 92
+      y: 6.09999999999998
+      zoom: 1
